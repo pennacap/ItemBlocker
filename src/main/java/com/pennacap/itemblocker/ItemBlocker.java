@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class ItemBlocker extends JavaPlugin implements Listener {
     public List<Material> materials = new ArrayList<>();
@@ -27,14 +28,20 @@ public final class ItemBlocker extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onMove(InventoryClickEvent event){
+        AtomicBoolean shouldDelete = new AtomicBoolean(false);
         Arrays.stream(event.getWhoClicked().getInventory().getContents()).forEach(itemStack -> {
             if (materials.contains(itemStack.getType()) && !event.getWhoClicked().hasPermission("itemblocker.ignoreblock")){
                 itemStack.setAmount(0);
-                event.getWhoClicked().sendMessage(getConfig().getString("found-blacklisted-item-error"));
+                shouldDelete.set(true);
             }
 
         });
-
+        if (materials.contains(event.getCursor().getType()) && !event.getWhoClicked().hasPermission("itemblocker.ignoreblock")){
+            event.getCursor().setAmount(0);
+            shouldDelete.set(true);
+        }
+        if (shouldDelete.get())
+            event.getWhoClicked().sendMessage(getConfig().getString("found-blacklisted-item-error"));
     }
 
 }
