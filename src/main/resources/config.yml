@@ -1,0 +1,12 @@
+
+found-blacklisted-item-error: "§4There was a blacklisted item in your inventory! It has been removed"
+
+# Error sent if a blocked item is found
+
+
+blacklisted-items:
+
+
+# Block an item, add an item like below
+#  - ELYTRA
+# The names are mentioned in Spigot's javadocs (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html#enum-constant-summary)

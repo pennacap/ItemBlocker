@@ -1,0 +1,10 @@
+name: ItemBlocker
+version: '${project.version}'
+main: com.pennacap.itemblocker.ItemBlocker
+authors: [ pennacap ]
+description: Blocks certain items from people's inventories!
+permissions:
+  itemblocker.ignoreblock:
+    description: Doesn't scan the people with this permission
+    default: op
+
